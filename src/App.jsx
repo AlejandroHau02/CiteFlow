@@ -5,21 +5,28 @@ import Home from './pages/Home';
 import Booking from './pages/Booking';
 import Login from './pages/Login';
 import Admin from './pages/Admin';
+import RequireAuth from './components/auth/RequireAuth';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
-    <AppointmentsProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="booking" element={<Booking />} />
-            <Route path="login" element={<Login />} />
-            <Route path="admin" element={<Admin />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </AppointmentsProvider>
+    <AuthProvider>
+      <AppointmentsProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="booking" element={<Booking />} />
+              <Route path="login" element={<Login />} />
+              
+              <Route element={<RequireAuth />}>
+                <Route path="admin" element={<Admin />} />
+              </Route>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AppointmentsProvider>
+    </AuthProvider>
   );
 }
 
